@@ -14,8 +14,8 @@ double birdHeight = 0.183;
 /// Variables to calculate bird movements function [startGame] in [GamePage]
 double time = 0;
 double height = 0;
-double gravity = -3.9; // How strong the Gravity
-double velocity = 2.5; // How strong the jump
+double gravity = -4.0; // How strong the Gravity
+double velocity = 2.0; // How strong the jump
 double initialHeight = yAxis;
 bool gameHasStarted = false;
 

@@ -1,43 +1,69 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:flappy_bird/Database/database.dart';
-import 'package:flappy_bird/Global/functions.dart';
 import 'package:flutter/material.dart';
+import '../../Global/functions.dart';
 
-import '../../Global/constant.dart';
-
-class DifficultySettings extends StatelessWidget {
+class DifficultySettings extends StatefulWidget {
   const DifficultySettings({Key? key}) : super(key: key);
+
+  @override
+  State<DifficultySettings> createState() => _DifficultySettingsState();
+}
+
+class _DifficultySettingsState extends State<DifficultySettings> {
+  String _selectedDifficulty = 'easy'; // Default difficulty
+  double _barrierMovement = 0.05; // Default to Easy
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.026),
+      margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.026),
       child: Column(
         children: [
           Container(
-              margin: EdgeInsets.symmetric(vertical: 10),
-              child: myText("Difficulty", Colors.black, 20)),
+            margin: EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              "Difficulty",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 26,
+                fontWeight: FontWeight.w400,
+                fontFamily: 'JungleAdventurer',
+              ),
+            ),
+          ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               gameButton(() {
-                barrierMovement = 0.05;
-                write("level", barrierMovement);
-              }, "Easy", Colors.green.shade300),
+                setState(() {
+                  _selectedDifficulty = 'easy';
+                  _barrierMovement = 0.05;
+                });
+                print("Selected difficulty: Easy, barrierMovement: $_barrierMovement");
+              }, "Easy", Color.fromRGBO(119, 180, 0, 1)),
               gameButton(() {
-                barrierMovement = 0.08;
-                write("level", barrierMovement);
-              }, "Medium", Colors.yellow.shade700),
+                setState(() {
+                  _selectedDifficulty = 'medium';
+                  _barrierMovement = 0.08;
+                });
+                print("Selected difficulty: Medium, barrierMovement: $_barrierMovement");
+              }, "Medium", Color.fromRGBO(244, 198, 43, 1)),
               gameButton(() {
-                barrierMovement = 0.1;
-                write("level", barrierMovement);
-              }, "Hard", Colors.red.shade300),
+                setState(() {
+                  _selectedDifficulty = 'hard';
+                  _barrierMovement = 0.1;
+                });
+                print("Selected difficulty: Hard, barrierMovement: $_barrierMovement");
+              }, "Hard", Color.fromRGBO(217, 106, 109, 1)),
             ],
           ),
         ],
       ),
     );
   }
+
+  // Getter to access selected difficulty and barrier movement
+  String get selectedDifficulty => _selectedDifficulty;
+  double get barrierMovement => _barrierMovement;
 }

@@ -14,30 +14,33 @@ class RateUs extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: Container(
+
             width: size.width,
             height: size.height,
             decoration: background(Str.image),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                  RatingDialog(
-                      title: myText("Rate Us",Colors.blueAccent,25),
-                      //   message: Text(" Tap to start Rating "),
-                      image: Icon(Icons.star, size: 100, color: Colors.red),
-                      submitButtonText: 'Submit',
-                      onSubmitted: (response) {
-                      }),
-                SizedBox(
-                  width: 100,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.cyan.shade300,
-                    ),
-                    onPressed: (){
-                      Share.share("https://github.com/moha-b/Flappy-Bird/releases/download/v.0.4.2/app-release.apk");
-                    }, child: Icon(Icons.share_rounded,size: 30,), ),
-                )
+                RatingDialog(
+                  title:
+                  Text("Rate Us                   ",textAlign: TextAlign.left,
+                      style: TextStyle(color:  Colors.blueAccent,
+                          fontSize: 26,
+                        fontWeight: FontWeight.w400,
+
+                     fontFamily: 'JungleAdventurer')),
+                   image: Image.asset(
+                    'assets/pics/rateus.png',
+                    height: 118,
+                    width: 118,
+                  ),
+                  submitButtonText: 'Submit',
+                  onSubmitted: (response) {
+                    // handle response
+                  },
+                ),
+
+
               ],
             ),
         ),

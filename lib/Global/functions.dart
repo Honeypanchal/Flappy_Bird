@@ -1,93 +1,161 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:audioplayers/audioplayers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flappy_bird/Resources/strings.dart';
 import 'package:flutter/material.dart';
-import '../Database/database.dart';
-import 'constant.dart';
+import '../Global/constant.dart';
 
-Text myText(String txt, Color? color, double size){
+Text myText(String txt, Color? color, double size) {
   return Text(
     txt,
     style: TextStyle(
-        fontSize: size,
-        fontFamily: "Magic4",
-        color: color
+      fontSize: size,
+      fontFamily: "JungleAdventurer",
+      color: color,
     ),
   );
 }
 
-ElevatedButton gameButton(VoidCallback? onPress, String txt, Color color){
-  return ElevatedButton(
-    onPressed: onPress,
-    style: ElevatedButton.styleFrom(primary: color),
-    child: myText(txt,Colors.white,20),
+Widget gameButton(VoidCallback? onPress, String txt, Color color) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 2.0),
+    child: SizedBox(
+      width: 95,
+      height: 45,
+      child: ElevatedButton(
+        onPressed: onPress,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        child: Text(
+          txt,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+            fontFamily: 'JungleAdventurer',
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
+    ),
   );
 }
 
-BoxDecoration frame(){
+BoxDecoration frame() {
   return BoxDecoration(
-      borderRadius: BorderRadius.circular(10),
-      border: Border.all(color: Colors.black, width: 2),
-      color: Colors.white54,
-      boxShadow: [BoxShadow(color: Colors.grey.withOpacity(0.6),blurRadius: 1.0,offset: Offset(5,5))]);
-}
-
-BoxDecoration background(String y){
-  return BoxDecoration(
-    image: DecorationImage(
-        image: AssetImage("assets/pics/$y.png"),
-        fit: BoxFit.fill),
-  );
-}
-
-AlertDialog dialog(BuildContext context){
-  return AlertDialog(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-    actionsPadding: EdgeInsets.only(right: 8, bottom: 8),
-    title: myText("About Flappy Bird",Colors.black, 22),
-    content: Text(Str.about, style: TextStyle(fontFamily: "Magic4"),),
-    actions: [
-      gameButton(() {Navigator.pop(context);}, "Okay", Colors.deepOrange),
+    borderRadius: BorderRadius.circular(10),
+    border: Border.all(color: Colors.black, width: 2),
+    color: Colors.white54,
+    boxShadow: [
+      BoxShadow(
+        color: Colors.grey.withOpacity(0.6),
+        blurRadius: 1.0,
+        offset: Offset(5, 5),
+      )
     ],
   );
 }
 
-void init() {
-  if(read("score") != null){
-    topScore = read("score");
-  }else{
-    write("score", topScore);
-  }
-  if(read("background") != null){
-    Str.image = read("background");
-  }else{
-    write("background", Str.image);
-  }
-  if(read("bird") != null){
-    Str.bird = read("bird");
-  }else{
-    write("bird", Str.bird);
-  }
-  if(read("level") != null){
-    barrierMovement = read("level");
-  }else{
-    write("level", barrierMovement);
-  }
-  if(read("audio") != null){
-    play = read("audio");
-  }else{
-    write("audio", play);
-  }
-  if(play){
-    player.play(AssetSource("audio/Tintin.mp3"));
-  }else{
-    player.stop();
-  }
-  player.setReleaseMode(ReleaseMode.loop);
+BoxDecoration background(String y) {
+  return BoxDecoration(
+    image: DecorationImage(
+      image: AssetImage("assets/pics/flapp_bg1.png"),
+      fit: BoxFit.fill,
+    ),
+  );
 }
 
-void navigate(context,navigate){
-  switch(navigate){
+AlertDialog dialog(BuildContext context) {
+  return AlertDialog(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+    actionsPadding: EdgeInsets.only(right: 10, bottom: 16),
+    title: myText("About Flappy Bird", Colors.black, 28),
+    content: Text(
+      Str.about,
+      style: TextStyle(
+        fontFamily: "JungleAdventurer",
+        fontWeight: FontWeight.w400,
+        fontSize: 20,
+      ),
+    ),
+    actions: [
+      gameButton(() {
+        Navigator.pop(context);
+      }, "Okay", Color.fromRGBO(180, 40, 0, 1)),
+    ],
+  );
+}
+
+Future<void> init() async {
+  final user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    final ref = FirebaseDatabase.instance.ref("users/${user.uid}");
+    try {
+      // Load audio setting
+      final audioSnapshot = await ref.child("audio").get();
+      if (audioSnapshot.exists) {
+        play = audioSnapshot.value as bool? ?? true;
+      } else {
+        await ref.child("audio").set(play); // Default to true
+      }
+
+      // Load other settings (replace Database/database.dart)
+      final scoreSnapshot = await ref.child("best_score").get();
+      if (scoreSnapshot.exists) {
+        topScore = scoreSnapshot.value as int? ?? 0;
+      } else {
+        await ref.child("best_score").set(topScore);
+      }
+
+      final backgroundSnapshot = await ref.child("background").get();
+      if (backgroundSnapshot.exists) {
+        Str.image = backgroundSnapshot.value as String? ?? Str.image;
+      } else {
+        await ref.child("background").set(Str.image);
+      }
+
+      final birdSnapshot = await ref.child("bird").get();
+      if (birdSnapshot.exists) {
+        Str.bird = birdSnapshot.value as String? ?? Str.bird;
+      } else {
+        await ref.child("bird").set(Str.bird);
+      }
+
+      final levelSnapshot = await ref.child("level").get();
+      if (levelSnapshot.exists) {
+        barrierMovement = (levelSnapshot.value as num?)?.toDouble() ?? barrierMovement;
+      } else {
+        await ref.child("level").set(barrierMovement);
+      }
+
+      print("✅ Initialized settings from Firebase: audio=$play, topScore=$topScore");
+    } catch (e) {
+      print("🔥 Error initializing settings from Firebase: $e");
+    }
+  }
+
+  // Initialize player
+  try {
+    await player.setSource(AssetSource("audio/Flappy_Bird.mp3"));
+    await player.setReleaseMode(ReleaseMode.loop);
+    if (play) {
+      await player.resume();
+    } else {
+      await player.stop();
+    }
+  } catch (e) {
+    print("🔥 Error initializing audio player: $e");
+  }
+}
+
+void navigate(context, navigate) {
+  switch (navigate) {
     case Str.gamePage:
       Navigator.pushNamed(context, Str.gamePage);
       break;

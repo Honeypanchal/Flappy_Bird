@@ -15,8 +15,8 @@ class Bird extends StatelessWidget {
       alignment: Alignment(0, (2 * yAxis + birdHeight) / (2- birdHeight)),
       duration: Duration(milliseconds: 0),
       child: Image.asset(Str.bird,
-        width: size.width * birdWidth,
-        height: size.height * birdHeight,
+        width: 60,
+        height: 40,
         fit: BoxFit.cover,
       ),
     );

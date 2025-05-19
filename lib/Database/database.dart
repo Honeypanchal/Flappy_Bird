@@ -1,33 +1,43 @@
-// ignore_for_file: avoid_print
-
 import 'package:hive_flutter/hive_flutter.dart';
 
-void write(String id, dynamic value) async{
-  final myBox = Hive.box('user');
-  switch(id){
+late Box myBox;
+
+Future<void> initHiveBox() async {
+  if (!Hive.isBoxOpen('user')) {
+    myBox = await Hive.openBox('user');
+  } else {
+    myBox = Hive.box('user');
+  }
+}
+
+Future<void> write(String id, dynamic value) async {
+  await initHiveBox(); // ✅ Ensure box is open before write
+
+  switch (id) {
     case "score":
-      myBox.put("score", value);
+      await myBox.put("score", value);
       break;
     case "background":
-      myBox.put("background", value);
+      await myBox.put("background", value);
       break;
     case "bird":
-      myBox.put("bird", value);
+      await myBox.put("bird", value);
       print("bird is Activated");
       break;
     case "level":
-      myBox.put("level", value);
+      await myBox.put("level", value);
       break;
     case "audio":
-      myBox.put("audio", value);
+      await myBox.put("audio", value);
       break;
   }
 }
 
-dynamic read(String id){
-  final myBox = Hive.box('user');
+Future<dynamic> read(String id) async {
+  await initHiveBox(); // ✅ Ensure box is open before read
+
   dynamic value;
-  switch(id){
+  switch (id) {
     case "score":
       value = myBox.get("score");
       break;

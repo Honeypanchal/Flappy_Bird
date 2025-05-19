@@ -9,7 +9,11 @@ class Button extends StatelessWidget {
   final double height;
   final String page;
   final String buttonType;
-  const Button({required this.width, required this.height,this.icon, required this.page,required this.buttonType,Key? key}) : super(key: key);
+
+  const Button({required this.width,
+    required this.height,this.icon,
+    
+    required this.page,required this.buttonType,Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,12 +26,17 @@ class Button extends StatelessWidget {
             borderRadius: BorderRadius.circular(15),
             border: Border.all(color: Colors.black),
             gradient: LinearGradient(
-                colors: [Colors.white,Colors.grey.shade500],
+                colors: [Colors.white,
+                  Color.fromRGBO(130, 208, 237, 1)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter),
           ),
           alignment: Alignment.center,
-          child: buttonType == "text"? myText("Play",Colors.green,35)
+          child: buttonType == "text"?
+          Icon(Icons.play_arrow,
+            size: 55,
+            color: Colors.green,shadows: [BoxShadow(blurRadius: 4,offset: Offset(0, 4),
+          color: Color.fromRGBO(0, 0,0,0.25))],)
               : icon
       ),
       onTap: (){

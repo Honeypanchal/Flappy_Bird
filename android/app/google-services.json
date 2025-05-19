@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "596503139566",
+    "project_id": "flappyybird-b98e7",
+    "storage_bucket": "flappyybird-b98e7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596503139566:android:11b46394b3020b14fb4fff",
+        "android_client_info": {
+          "package_name": "com.ext.tappybird"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvexJwbqiiUq7WRkoDKH_NQKPGIo-Tx_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

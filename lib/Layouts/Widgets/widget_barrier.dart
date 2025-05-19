@@ -17,14 +17,13 @@ class Barrier extends StatelessWidget {
     return AnimatedContainer(
       alignment: Alignment((2 * direction + barrierWidth) /  (2 - barrierWidth),isTop ? 1.1 : -1.1),
       duration: Duration(milliseconds: 0),
-      child: Container(
-        height: (size.height) / (4 * barrierHeight) /2,
+      child: Image.asset(
+        isTop
+            ? "assets/pics/piller_straight.png" // top = flipped
+            : 'assets/pics/piller_opposite.png', // bottom = normal
+        height: (size.height) / ( 3 * barrierHeight) / 2,
         width: size.width * barrierWidth / 2,
-        decoration: BoxDecoration(
-          color: Colors.green,
-          border: Border.all(width: 10,color: Colors.green.shade900),
-          borderRadius: BorderRadius.circular(16),
-        ),
+        fit: BoxFit.fill, // ensures image scales correctly
       ),
     );
   }

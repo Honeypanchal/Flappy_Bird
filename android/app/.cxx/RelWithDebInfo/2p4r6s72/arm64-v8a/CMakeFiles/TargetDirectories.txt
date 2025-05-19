@@ -1,0 +1,2 @@
+D:/Excelsior Technologies/Flappy-Bird/android/app/.cxx/RelWithDebInfo/2p4r6s72/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/Excelsior Technologies/Flappy-Bird/android/app/.cxx/RelWithDebInfo/2p4r6s72/arm64-v8a/CMakeFiles/rebuild_cache.dir
