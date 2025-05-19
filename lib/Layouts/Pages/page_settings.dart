@@ -41,10 +41,10 @@ class _SettingsState extends State<Settings> {
                 icon: Icon(Icons.arrow_back, size: 40, color: Colors.white),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height>900? 60 :20,),
             Container(
               width: size.width * 0.9,
-              height: size.height * 0.6,
+              height: MediaQuery.of(context).size.height>900? size.height*0.5 : size.height * 0.6,
               margin: EdgeInsets.symmetric(horizontal: 16),
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(

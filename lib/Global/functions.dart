@@ -74,7 +74,7 @@ BoxDecoration background(String y) {
 AlertDialog dialog(BuildContext context) {
   return AlertDialog(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-    actionsPadding: EdgeInsets.only(right: 10, bottom: 16),
+    actionsPadding: EdgeInsets.only(right: 24, bottom: 25),
     title: myText("About Flappy Bird", Colors.black, 28),
     content: Text(
       Str.about,

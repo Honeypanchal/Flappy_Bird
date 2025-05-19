@@ -18,12 +18,14 @@ void main() async {
     if (Firebase.apps.isEmpty) {
       await Firebase.initializeApp(
         options: const FirebaseOptions(
-          apiKey: "AIzaSyA1XNkETcs-GcCjKCJDgn3O-b_N0eWgZ0c",
-          authDomain: "flappyybird-b98e7.firebaseapp.com",
-          projectId: "flappyybird-b98e7",
-          messagingSenderId: "596503139566",
-          appId: "1:596503139566:web:324fb6a26d615bc0fb4fff",
-          measurementId: "G-J6GQ0V1FPZ",
+            apiKey: "AIzaSyA1XNkETcs-GcCjKCJDgn3O-b_N0eWgZ0c",
+            authDomain: "flappyybird-b98e7.firebaseapp.com",
+            databaseURL: "https://flappyybird-b98e7-default-rtdb.firebaseio.com",
+            projectId: "flappyybird-b98e7",
+            storageBucket: "flappyybird-b98e7.firebasestorage.app",
+            messagingSenderId: "596503139566",
+            appId: "1:596503139566:web:e031ae14fa413fe8fb4fff",
+            measurementId: "G-QTNNXLJJSY"
         ),
       );
       print("✅ Firebase initialized!");

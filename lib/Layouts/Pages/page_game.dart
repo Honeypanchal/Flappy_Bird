@@ -265,7 +265,7 @@ class _GamePageState extends State<GamePage> {
           contentPadding: EdgeInsets.zero,
           content: SizedBox(
             width: 324,
-            height: 250,
+            height: 210,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -275,7 +275,7 @@ class _GamePageState extends State<GamePage> {
               ],
             ),
           ),
-          actionsPadding: EdgeInsets.only(right: 8, bottom: 8),
+          actionsPadding: EdgeInsets.only(right: 8, bottom: 15,top: 15),
           actions: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(

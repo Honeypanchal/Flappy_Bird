@@ -48,14 +48,16 @@ class _StartScreenState extends State<StartScreen> {
           children: [
             // Flappy bird text
             Container(
-                margin: EdgeInsets.only(top: size.height * 0.25),
+                margin: EdgeInsets.only(top: MediaQuery.of(context).size.height>900? size.height*0.22  :
+                size.height * 0.25,),
                 child: Column(
                   children: [
                     Image.asset(
                       'assets/pics/Flappy Bird.png',
                     ),
                     SizedBox(
-                      height: 10,
+                      height: MediaQuery.of(context).size.height>900? 15 :
+                      10,
                     ),
                     Image.asset('assets/pics/Get Ready.png'),
                     SizedBox(
@@ -65,7 +67,8 @@ class _StartScreenState extends State<StartScreen> {
                 )),
             Bird(yAxis, birdWidth, birdHeight),
             SizedBox(
-              height: 25,
+              height: MediaQuery.of(context).size.height>900? 30 :
+              25,
             ),
             _buttons(context),
             AboutUs(
