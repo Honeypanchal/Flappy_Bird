@@ -9,6 +9,7 @@ import 'Resources/strings.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,8 +61,35 @@ void main() async {
   runApp(const MainApp());
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends StatefulWidget {
   const MainApp({super.key});
+
+  @override
+  State<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends State<MainApp> {
+  AppUpdateInfo? _updateInfo;
+  bool _updateChecked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    checkForUpdate();
+  }
+  void checkForUpdate() async {
+    if (_updateChecked) return; // avoid multiple checks
+    _updateChecked = true;
+
+    try {
+      _updateInfo = await InAppUpdate.checkForUpdate();
+      if (_updateInfo?.updateAvailability == UpdateAvailability.updateAvailable) {
+        await InAppUpdate.performImmediateUpdate();
+      }
+    } catch (e) {
+      print("❌ Update check failed: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
