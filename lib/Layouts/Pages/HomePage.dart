@@ -108,51 +108,53 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          Center(
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 100),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset('assets/pics/Homepage_image.png'),
-                  const SizedBox(height: 40),
-                  Container(
-                    width: 251,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(0, 0, 0, 0.2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    alignment: Alignment.center,
-                    child: TextField(
-                      controller: _nicknameController,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 26,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'JungleAdventurer',
+          SingleChildScrollView(
+            child: Center(
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 100),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset('assets/pics/Homepage_image.png'),
+                    const SizedBox(height: 40),
+                    Container(
+                      width: 251,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(0, 0, 0, 0.2),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      decoration: const InputDecoration(
-                        hintText: 'NICKNAME',
-                        hintStyle: TextStyle(
+                      alignment: Alignment.center,
+                      child: TextField(
+                        controller: _nicknameController,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
                           fontSize: 26,
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
                           fontFamily: 'JungleAdventurer',
                         ),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.zero,
+                        decoration: const InputDecoration(
+                          hintText: 'NICKNAME',
+                          hintStyle: TextStyle(
+                            fontSize: 26,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'JungleAdventurer',
+                          ),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                        cursorColor: Colors.white,
                       ),
-                      cursorColor: Colors.white,
                     ),
-                  ),
-                  const SizedBox(height: 50),
-                  GestureDetector(
-                    onTap: _saveNicknameAndProceed,
-                    child: Image.asset('assets/pics/play_button.png'),
-                  ),
-                ],
+                    const SizedBox(height: 50),
+                    GestureDetector(
+                      onTap: _saveNicknameAndProceed,
+                      child: Image.asset('assets/pics/play_button.png'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
