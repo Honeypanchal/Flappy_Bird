@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import '../../Global/constant.dart';
-import '../../Global/functions.dart';
+import '../../Layouts/Widgets//audio_manager.dart'; // ✅ Import AudioManager
 
 class MusicSettings extends StatefulWidget {
   const MusicSettings({Key? key}) : super(key: key);
@@ -23,35 +23,28 @@ class _MusicSettingsState extends State<MusicSettings> with WidgetsBindingObserv
     checkAudio();
   }
 
-  void checkAudio() async {
+  Future<void> checkAudio() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
         final snapshot = await FirebaseDatabase.instance.ref("users/${user.uid}/audio").get();
         setState(() {
           isPlaying = snapshot.exists ? snapshot.value as bool : true;
-          play = isPlaying; // Sync global play variable
         });
         if (isPlaying) {
-          await player.resume();
+          await AudioManager.playBackground();
         } else {
-          await player.pause();
+          await AudioManager.pauseBackground();
         }
         print("✅ Loaded audio setting from Firebase: $isPlaying");
       } catch (e) {
-        print("🔥 Error loading audio from Firebase: $e");
-        setState(() {
-          isPlaying = true; // Default to true on error
-          play = isPlaying;
-        });
-        await player.resume();
+        print("🔥 Error loading audio: $e");
+        setState(() => isPlaying = true);
+        await AudioManager.playBackground();
       }
     } else {
-      setState(() {
-        isPlaying = true; // Default to true if no user
-        play = isPlaying;
-      });
-      await player.resume();
+      setState(() => isPlaying = true);
+      await AudioManager.playBackground();
     }
   }
 
@@ -62,13 +55,26 @@ class _MusicSettingsState extends State<MusicSettings> with WidgetsBindingObserv
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused || state == AppLifecycleState.inactive) {
-      player.pause();
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    debugPrint("📱 App lifecycle changed: $state");
+
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      await player.pause();
+      debugPrint("⏸️ Music paused");
     } else if (state == AppLifecycleState.resumed && isPlaying) {
-      player.resume();
+      try {
+        // FIX: Reload the source before resuming
+        await player.setSourceAsset('assets/Audio/bg_music.mp3');
+        await player.resume();
+        debugPrint("▶️ Music resumed after setting source");
+      } catch (e) {
+        debugPrint("🔥 Error resuming music: $e");
+      }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -97,11 +103,8 @@ class _MusicSettingsState extends State<MusicSettings> with WidgetsBindingObserv
                   if (user != null) {
                     await FirebaseDatabase.instance.ref("users/${user.uid}/audio").set(true);
                   }
-                  await player.resume();
-                  setState(() {
-                    isPlaying = true;
-                    play = true;
-                  });
+                  await AudioManager.playBackground();
+                  setState(() => isPlaying = true);
                   print("✅ Music turned ON");
                 },
                 child: Image.asset('assets/pics/music_on.png'),
@@ -112,11 +115,8 @@ class _MusicSettingsState extends State<MusicSettings> with WidgetsBindingObserv
                   if (user != null) {
                     await FirebaseDatabase.instance.ref("users/${user.uid}/audio").set(false);
                   }
-                  await player.pause();
-                  setState(() {
-                    isPlaying = false;
-                    play = false;
-                  });
+                  await AudioManager.pauseBackground();
+                  setState(() => isPlaying = false);
                   print("✅ Music turned OFF");
                 },
                 child: Image.asset('assets/pics/music_off.png'),

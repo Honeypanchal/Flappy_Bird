@@ -10,6 +10,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:in_app_update/in_app_update.dart';
+import 'package:flappy_bird/Global/constant.dart';
+const MethodChannel _channel = MethodChannel('com.ext.tappybird/screen');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -76,6 +78,18 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
     checkForUpdate();
+    setupScreenListener();
+  }
+  void setupScreenListener() {
+    _channel.setMethodCallHandler((call) async {
+      if (call.method == "screenOff") {
+        print("📴 Detected screen off — pausing music");
+        await player.pause();
+      } else if (call.method == "appMinimized") {
+        print("🏠 App minimized — pausing music");
+        await player.pause();
+      }
+    });
   }
   void checkForUpdate() async {
     if (_updateChecked) return; // avoid multiple checks
