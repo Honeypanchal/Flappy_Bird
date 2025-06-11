@@ -61,20 +61,13 @@ class _MusicSettingsState extends State<MusicSettings> with WidgetsBindingObserv
     if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive ||
         state == AppLifecycleState.detached) {
-      await player.pause();
-      debugPrint("⏸️ Music paused");
+      await AudioManager.pauseBackground();
+      debugPrint("⏸️ Music paused via AudioManager");
     } else if (state == AppLifecycleState.resumed && isPlaying) {
-      try {
-        // FIX: Reload the source before resuming
-        await player.setSourceAsset('assets/Audio/bg_music.mp3');
-        await player.resume();
-        debugPrint("▶️ Music resumed after setting source");
-      } catch (e) {
-        debugPrint("🔥 Error resuming music: $e");
-      }
+      await AudioManager.playBackground(); // Ensure it replays with loop
+      debugPrint("▶️ Music resumed via AudioManager");
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

@@ -104,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: FittedBox(
           fit: BoxFit.cover,
           child: Transform.scale(
-            scale: 1.02, // Slight zoom to remove green edge
+            scale: 1.1, // Slight zoom to remove green edge
             child: SizedBox(
               width: _videoController.value.size.width,
               height: _videoController.value.size.height,
