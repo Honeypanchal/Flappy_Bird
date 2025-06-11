@@ -17,7 +17,7 @@ Text myText(String txt, Color? color, double size) {
   );
 }
 
-Widget gameButton(VoidCallback? onPress, String txt, Color color) {
+Widget gameButton(VoidCallback? onPress, String txt, Color color, {bool isSelected = false, Color? highlightColor}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 2.0),
     child: SizedBox(
@@ -27,10 +27,16 @@ Widget gameButton(VoidCallback? onPress, String txt, Color color) {
         onPressed: onPress,
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
+          shadowColor: isSelected ? Colors.black : Colors.transparent, // Glow effect
+          elevation: isSelected ? 5 : 0, // Elevation for glow
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
+            side: isSelected && highlightColor != null
+                ? BorderSide(color: highlightColor, width: 3)
+                : BorderSide.none, // Use highlightColor for border if selected
           ),
+
         ),
         child: Text(
           txt,
@@ -46,7 +52,6 @@ Widget gameButton(VoidCallback? onPress, String txt, Color color) {
     ),
   );
 }
-
 BoxDecoration frame() {
   return BoxDecoration(
     borderRadius: BorderRadius.circular(10),
@@ -87,7 +92,7 @@ AlertDialog dialog(BuildContext context) {
     actions: [
       gameButton(() {
         Navigator.pop(context);
-      }, "Okay", Color.fromRGBO(180, 40, 0, 1)),
+      }, "Okay", Color.fromRGBO(180, 40, 0, 1), isSelected: false), // Pass isSelected as false
     ],
   );
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import '../../Global/functions.dart';
 
@@ -35,27 +33,45 @@ class _DifficultySettingsState extends State<DifficultySettings> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              gameButton(() {
-                setState(() {
-                  _selectedDifficulty = 'easy';
-                  _barrierMovement = 0.05;
-                });
-                print("Selected difficulty: Easy, barrierMovement: $_barrierMovement");
-              }, "Easy", Color.fromRGBO(119, 180, 0, 1)),
-              gameButton(() {
-                setState(() {
-                  _selectedDifficulty = 'medium';
-                  _barrierMovement = 0.08;
-                });
-                print("Selected difficulty: Medium, barrierMovement: $_barrierMovement");
-              }, "Medium", Color.fromRGBO(244, 198, 43, 1)),
-              gameButton(() {
-                setState(() {
-                  _selectedDifficulty = 'hard';
-                  _barrierMovement = 0.1;
-                });
-                print("Selected difficulty: Hard, barrierMovement: $_barrierMovement");
-              }, "Hard", Color.fromRGBO(217, 106, 109, 1)),
+              gameButton(
+                    () {
+                  setState(() {
+                    _selectedDifficulty = 'easy';
+                    _barrierMovement = 0.05;
+                  });
+                  print("Selected difficulty: Easy, barrierMovement: $_barrierMovement");
+                },
+                "Easy",
+                Color.fromRGBO(119, 180, 0, 1),
+                isSelected: _selectedDifficulty == 'easy',
+                highlightColor: Color.fromRGBO(0, 255, 0, 1), // Neon green for Easy
+              ),
+              gameButton(
+                    () {
+                  setState(() {
+                    _selectedDifficulty = 'medium';
+                    _barrierMovement = 0.08;
+                  });
+                  print("Selected difficulty: Medium, barrierMovement: $_barrierMovement");
+                },
+                "Medium",
+                Color.fromRGBO(244, 198, 43, 1),
+                isSelected: _selectedDifficulty == 'medium',
+                highlightColor: Color.fromRGBO(255, 255, 0, 1), // Neon yellow for Medium
+              ),
+              gameButton(
+                    () {
+                  setState(() {
+                    _selectedDifficulty = 'hard';
+                    _barrierMovement = 0.1;
+                  });
+                  print("Selected difficulty: Hard, barrierMovement: $_barrierMovement");
+                },
+                "Hard",
+                Color.fromRGBO(217, 106, 109, 1),
+                isSelected: _selectedDifficulty == 'hard',
+                highlightColor: Color.fromRGBO(255, 0, 0, 1), // Neon red for Hard
+              ),
             ],
           ),
         ],

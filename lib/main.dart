@@ -112,7 +112,7 @@ class _MainAppState extends State<MainApp> {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      home:  Splashscreen(),
+      home:  SplashScreen(),
       debugShowCheckedModeBanner: false,
       initialRoute: Str.home,
       onGenerateRoute: AppRoute().generateRoute,

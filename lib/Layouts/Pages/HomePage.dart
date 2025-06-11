@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
           SingleChildScrollView(
             child: Center(
               child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 100),
+                margin:  EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height>900?170:110),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                         cursorColor: Colors.white,
                       ),
                     ),
-                    const SizedBox(height: 50),
+                     SizedBox(height: MediaQuery.of(context).size.height>900?30:20),
                     GestureDetector(
                       onTap: _saveNicknameAndProceed,
                       child: Image.asset('assets/pics/play_button.png'),

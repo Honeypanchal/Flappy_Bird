@@ -94,70 +94,107 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: gameHasStarted ? jump : startGame,
+      onTap: gameHasStarted ? jump : null, // Only jump when game has started
       child: Scaffold(
-        body: Column(children: [
-          Expanded(
-            flex: 3,
-            child: Container(
-              decoration: background(Str.image),
-              child: Stack(
-                children: [
-                  Bird(yAxis, birdWidth, birdHeight),
-                  Barrier(barrierHeight[0][0], barrierWidth, barrierX[0], true),
-                  Barrier(barrierHeight[0][1], barrierWidth, barrierX[0], false),
-                  Barrier(barrierHeight[1][0], barrierWidth, barrierX[1], true),
-                  Barrier(barrierHeight[1][1], barrierWidth, barrierX[1], false),
-                  if (!gameHasStarted) ...[
-                    Positioned(
-                      right: 20,
-                      bottom: 100,
-                      child: Image.asset(
-                        'assets/pics/piller_straight.png',
-                        width: 80,
+        body: Column(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Container(
+                decoration: background(Str.image),
+                child:
+                Stack(
+                  children: [
+                    Barrier(barrierHeight[0][0], barrierWidth, barrierX[0], true),
+                    Barrier(barrierHeight[0][1], barrierWidth, barrierX[0], false),
+                    Barrier(barrierHeight[1][0], barrierWidth, barrierX[1], true),
+                    Barrier(barrierHeight[1][1], barrierWidth, barrierX[1], false),
+                    if (!gameHasStarted) ...[
+                      Positioned(
+                        right: 20,
+                        bottom: 100,
+                        child: Image.asset(
+                          'assets/pics/piller_straight.png',
+                          width: 80,
+                        ),
                       ),
-                    ),
+                      Positioned(
+                        right: 20,
+                        child: Image.asset(
+                          'assets/pics/piller_opposite.png',
+                          width: 80,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: startGame,
+                        child: Container(
+                          margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height * 0.6,
+                            left: MediaQuery.of(context).size.width < 400
+                                ? MediaQuery.of(context).size.width * 0.3
+                                : MediaQuery.of(context).size.width * 0.33,
+                          ),
+                          width: 130,
+                          height: 46,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(color: Colors.black),
+                            gradient: const LinearGradient(
+                              colors: [Colors.white, Color.fromRGBO(130, 208, 237, 1)],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Play',
+                              style: TextStyle(
+                                fontSize: 28,
+                                fontFamily: 'JungleAdventurer',
+                                fontWeight: FontWeight.w400,
+                                color: Colors.green,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                    Bird(yAxis, birdWidth, birdHeight), // Non-positioned, comes after Play button
                     Positioned(
-                      right: 20,
-                      child: Image.asset(
-                        'assets/pics/piller_opposite.png',
-                        width: 80,
+                      bottom: MediaQuery.of(context).size.height > 900 ? 60 : 50,
+                      right: 1,
+                      left: 1,
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              "Score : $score",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 34,
+                                fontFamily: "JungleAdventurer",
+                              ),
+                            ),
+                            Text(
+                              "Best : $topScore",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 34,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "JungleAdventurer",
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
-                  Positioned(
-                    bottom: 1,
-                    right: 1,
-                    left: 1,
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            "Score : $score",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontFamily: "Magic4",
-                            ),
-                          ),
-                          Text(
-                            "Best : $topScore",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 30,
-                              fontFamily: "Magic4",
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),              ),
             ),
-          ),
-        ]),
+          ],
+        ),
       ),
     );
   }
@@ -179,10 +216,9 @@ class _GamePageState extends State<GamePage> {
       setState(() {
         if (barrierX[0] < screenEnd) {
           barrierX[0] += screenStart;
-          _barrier0Passed = false; // Reset when barrier resets
+          _barrier0Passed = false;
         } else {
           barrierX[0] -= _barrierMovement;
-          // Increment score when bird passes barrier 0
           if (barrierX[0] < birdWidth && !_barrier0Passed) {
             setState(() {
               score++;
@@ -194,10 +230,9 @@ class _GamePageState extends State<GamePage> {
       setState(() {
         if (barrierX[1] < screenEnd) {
           barrierX[1] += screenStart;
-          _barrier1Passed = false; // Reset when barrier resets
+          _barrier1Passed = false;
         } else {
           barrierX[1] -= _barrierMovement;
-          // Increment score when bird passes barrier 1
           if (barrierX[1] < birdWidth && !_barrier1Passed) {
             setState(() {
               score++;
@@ -230,7 +265,7 @@ class _GamePageState extends State<GamePage> {
   }
 
   void resetGame() {
-    saveBestScoreToFirebase(); // Save best score before resetting
+    saveBestScoreToFirebase();
     Navigator.pop(context);
     setState(() {
       yAxis = 0;
@@ -253,13 +288,15 @@ class _GamePageState extends State<GamePage> {
         return AlertDialog(
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-          title: Text(
-            "...Opps",
-            style: TextStyle(
-              color: Color.fromRGBO(181, 50, 0, 1),
-              fontFamily: 'JungleAdventurer',
-              fontSize: 40,
-              fontWeight: FontWeight.w400,
+          title: Center(
+            child: Text(
+              "Opps...",
+              style: TextStyle(
+                color: Color.fromRGBO(181, 50, 0, 1),
+                fontFamily: 'JungleAdventurer',
+                fontSize: 40,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
           contentPadding: EdgeInsets.zero,
@@ -275,7 +312,7 @@ class _GamePageState extends State<GamePage> {
               ],
             ),
           ),
-          actionsPadding: EdgeInsets.only(right: 8, bottom: 15,top: 15),
+          actionsPadding: EdgeInsets.only(right: 8, bottom: 15, top: 15),
           actions: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(

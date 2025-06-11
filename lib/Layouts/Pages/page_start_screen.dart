@@ -63,7 +63,7 @@ class _StartScreenState extends State<StartScreen> with WidgetsBindingObserver {
           children: [
             Container(
               margin: EdgeInsets.only(
-                top: size.height > 900 ? size.height * 0.22 : size.height * 0.25,
+                top: size.height > 900 ? size.height * 0.32 : size.height * 0.26,
               ),
               child: Column(
                 children: [
@@ -73,9 +73,11 @@ class _StartScreenState extends State<StartScreen> with WidgetsBindingObserver {
                 ],
               ),
             ),
+            SizedBox(height: 10,),
             Bird(yAxis, birdWidth, birdHeight),
-            SizedBox(height: size.height > 900 ? 40 : 35),
+            SizedBox(height: size.height > 900 ? 45 : 45),
             _buttons(context),
+            SizedBox(height: MediaQuery.of(context).size.height>900?20:10),
             AboutUs(size: size),
           ],
         ),
@@ -143,47 +145,24 @@ Column _buttons(BuildContext context) {
           ),
         ),
       ),
-      const SizedBox(height: 20),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Button(
-            buttonType: "icon",
-            height: 60,
-            width: 110,
-            icon: const Icon(
-              Icons.settings,
-              size: 40,
-              color: Colors.black,
-              shadows: [
-                BoxShadow(
-                  color: Color.fromRGBO(255, 255, 255, 0.2),
-                  offset: Offset(0, -2),
-                  blurRadius: 4,
-                ),
-              ],
+      SizedBox(height: MediaQuery.of(context).size.height>900?25:20),
+      Button(
+        buttonType: "icon",
+        width: 278,
+        height: 60,
+        icon: const Icon(
+          Icons.settings,
+          size: 40,
+          color: Colors.black,
+          shadows: [
+            BoxShadow(
+              color: Color.fromRGBO(255, 255, 255, 0.2),
+              offset: Offset(0, 2),
+              blurRadius: 4,
             ),
-            page: Str.settings,
-          ),
-          Button(
-            buttonType: "icon",
-            height: 60,
-            width: 110,
-            icon: const Icon(
-              Icons.star,
-              size: 40,
-              color: Color.fromRGBO(255, 0, 0, 1),
-              shadows: [
-                BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.25),
-                  blurRadius: 4,
-                  offset: Offset(0, -4),
-                ),
-              ],
-            ),
-            page: Str.rateUs,
-          ),
-        ],
+          ],
+        ),
+        page: Str.settings,
       ),
     ],
   );
@@ -203,7 +182,7 @@ class AboutUs extends StatelessWidget {
         );
       },
       child: Text(
-        'About Us',
+        'ABOUT US GAME',
         style: TextStyle(
           fontSize: 26,
           fontFamily: 'JungleAdventurer',

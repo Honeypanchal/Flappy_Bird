@@ -8,15 +8,17 @@ class Bird extends StatelessWidget {
   final double birdHeight;
 
   Bird(this.yAxis, this.birdWidth, this.birdHeight);
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return AnimatedContainer(
-      alignment: Alignment(0, (2 * yAxis + birdHeight) / (2- birdHeight)),
+      alignment: Alignment(0, (2 * yAxis + birdHeight) / (2 - birdHeight)),
       duration: Duration(milliseconds: 0),
-      child: Image.asset(Str.bird,
-        width: 60,
-        height: 40,
+      child: Image.asset(
+        Str.bird,
+        width: MediaQuery.of(context).size.width > 400 ? 80 : 60,
+        height: MediaQuery.of(context).size.height > 900 ? 50 : 40,
         fit: BoxFit.cover,
       ),
     );
