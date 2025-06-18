@@ -67,26 +67,27 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeVideo();
-  }
 
-  Future<void> _initializeVideo() async {
     _videoController = kIsWeb
-        ? VideoPlayerController.networkUrl(Uri.parse('assets/audio/Splash_screen.mp4'))
-        : VideoPlayerController.asset('assets/audio/Splash_screen.mp4');
+        ? VideoPlayerController.networkUrl(
+        Uri.parse('assets/audio/Splash_screen.mp4')) // For web
+        : VideoPlayerController.asset(
+        'assets/audio/Splash_screen.mp4'); // For mobile
 
-    await _videoController.initialize();
-    setState(() {});
-    _videoController.play();
+    _videoController.initialize().then((_) {
+      setState(() {});
+      _videoController.play();
 
-    _videoController.addListener(() {
-      if (_videoController.value.position >= _videoController.value.duration &&
-          !_videoController.value.isPlaying) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const StartScreen()),
-        );
-      }
+      _videoController.addListener(() {
+        if (_videoController.value.position >=
+            _videoController.value.duration &&
+            !_videoController.value.isPlaying) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => StartScreen()),
+          );
+        }
+      });
     });
   }
 
@@ -96,33 +97,24 @@ class _SplashScreenState extends State<SplashScreen> {
     super.dispose();
   }
 
-  Widget buildFullScreen({required Widget child}) {
-    return Container(
-      color: Colors.black,
-      alignment: Alignment.center,
-      child: ClipRect(
-        child: FittedBox(
-          fit: BoxFit.cover,
-          child: Transform.scale(
-            scale: 1.1, // Slight zoom to remove green edge
-            child: SizedBox(
-              width: _videoController.value.size.width,
-              height: _videoController.value.size.height,
-              child: child,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: _videoController.value.isInitialized
-          ? buildFullScreen(child: VideoPlayer(_videoController))
-          : const Center(child: CircularProgressIndicator(color: Colors.white)),
+      body: FutureBuilder(
+        future: _videoController.initialize(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            _videoController.play();
+            return AspectRatio(
+              aspectRatio: _videoController.value.aspectRatio,
+              child: VideoPlayer(_videoController),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
     );
   }
 }
