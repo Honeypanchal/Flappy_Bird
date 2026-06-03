@@ -22,6 +22,7 @@ dependencies:
   share_plus:
   hive:
   hive_flutter:
+  firebase_crashlytics:
 
 dev_dependencies:
   flutter_test:

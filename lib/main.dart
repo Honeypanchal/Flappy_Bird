@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flappy_bird/Layouts/Pages/Splash_Screen.dart';
 import 'package:flappy_bird/Routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:in_app_update/in_app_update.dart';
 import 'package:flappy_bird/Global/constant.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 const MethodChannel _channel = MethodChannel('com.ext.tappybird/screen');
 
 void main() async {
@@ -60,6 +64,12 @@ void main() async {
     print("🔥 General initialization error: $e");
   }
 
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
   runApp(const MainApp());
 }
 
