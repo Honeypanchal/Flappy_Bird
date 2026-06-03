@@ -182,7 +182,7 @@ class AboutUs extends StatelessWidget {
         );
       },
       child: Text(
-        'ABOUT US GAME',
+        'ABOUT GAME',
         style: TextStyle(
           fontSize: 26,
           fontFamily: 'JungleAdventurer',
