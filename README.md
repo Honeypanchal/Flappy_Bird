@@ -175,6 +175,13 @@ The application has been successfully published on the Google Play Store.
 
 * Android Studio
 * Git & GitHub
+## 📸 Screenshots
+
+<p align="center">
+  <img src="assets/screenshots/HomePage.png" width="250"/>
+  <img src="assets/screenshots/gamescreen.png" width="250"/>
+  <img src="assets/screenshots/settings.png" width="250"/>
+</p>
 
 ## 🎯 Future Enhancements
 
@@ -200,11 +207,4 @@ The application has been successfully published on the Google Play Store.
 ✅ Rating System
 
 ---
-
-## 📜 License
-
-This project is intended for educational and entertainment purposes. All rights reserved.
-
----
-
 ### 🎮 Keep Tapping, Keep Flying, and Beat Your High Score! 🐦🏆
