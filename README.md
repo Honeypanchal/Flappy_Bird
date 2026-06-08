@@ -17,16 +17,6 @@ Download the game from Google Play Store:
 
 Tappy Bird is an arcade-style game where players tap the screen to make the bird fly upward while avoiding obstacles. The game becomes more challenging as the speed increases based on the selected difficulty level.
 
-### Objective
-
-* Control the bird using screen taps.
-* Pass through the gaps between towers.
-* Avoid colliding with towers.
-* Achieve the highest possible score.
-
----
-
-## ✨ Features
 
 ### 🐦 Gameplay
 
@@ -34,18 +24,6 @@ Tappy Bird is an arcade-style game where players tap the screen to make the bird
 * Endless gameplay experience.
 * Real-time score tracking.
 * Smooth and responsive controls.
-
-### 🎯 Multiple Difficulty Levels
-
-The game includes three difficulty modes:
-
-| Difficulty | Description                         |
-| ---------- | ----------------------------------- |
-| Easy       | Slow tower movement for beginners   |
-| Medium     | Balanced gameplay experience        |
-| Hard       | Fast-paced and challenging gameplay |
-
-Difficulty directly affects obstacle movement speed and game challenge.
 
 ---
 
@@ -82,16 +60,6 @@ All user preferences are saved using Firebase.
 * Responsive layouts.
 * Engaging visual effects.
 
----
-
-### 🏆 Win & Lose Screens
-
-#### Win Screen
-
-* Score display.
-* Success animations.
-* Play Again option.
-
 #### Lose Screen
 
 * Final score display.
@@ -127,14 +95,6 @@ Features:
 
 The project uses Firebase services for backend functionality.
 
-### Firebase Services Used
-
-* Firebase Authentication (Guest Login)
-* Cloud Firestore
-* Firebase Analytics
-* Firebase Storage
-* Firebase Crashlytics
-
 ### Firebase Features
 
 * User Authentication
@@ -158,23 +118,6 @@ The application has been successfully published on the Google Play Store.
 
 ---
 
-## 🛠️ Technologies Used
-
-### Frontend
-
-* Flutter
-* Dart
-
-### Backend
-
-* Firebase Authentication
-* Cloud Firestore
-* Firebase Storage
-
-### Tools
-
-* Android Studio
-* Git & GitHub
 ## 📸 Screenshots
 
 <p align="center">
